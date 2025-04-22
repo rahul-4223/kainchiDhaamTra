@@ -143,9 +143,19 @@ export default function HomePage() {
               </div>
             </div>
             <div className="mt-10 lg:mt-0 lg:ml-8">
-              <div className="bg-white p-4 rounded-lg shadow">
-                <img src="/api/placeholder/500/400" alt="Traffic map visualization" className="rounded" />
-              </div>
+            <div className="bg-white p-4 rounded-lg shadow">
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2093.1943632834514!2d79.51199529414005!3d29.423193752043815!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39a0a3ab1b8ec5d9%3A0xea7786fa26ed7dd0!2sKainchi%20Dham%20-%20Shri%20Neeb%20Karori%20Baba%20Ashram!5e0!3m2!1sen!2sin!4v1745321376413!5m2!1sen!2sin"
+    width="100%"
+    height="400"
+    style={{ border: 0 }}
+    allowFullScreen=""
+    loading="lazy"
+    referrerPolicy="no-referrer-when-downgrade"
+    className="rounded w-full"
+  ></iframe>
+</div>
+
             </div>
           </div>
         </div>
