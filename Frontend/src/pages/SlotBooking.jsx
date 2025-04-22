@@ -1,3 +1,4 @@
+// the section are use for the book slote
 import { useState } from 'react';
 import { Calendar, Clock, Users, ChevronsRight } from 'lucide-react';
 
