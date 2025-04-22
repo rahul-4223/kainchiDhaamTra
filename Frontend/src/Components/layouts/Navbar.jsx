@@ -8,12 +8,12 @@ const Navbar = () => {
   const navigate = useNavigate(); // Navigation hook
 
   return (
-    <nav className="bg-indigo-700 text-white shadow-lg">
+    <nav className="bg-indigo-900 text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <span className="text-xl font-bold">KainchiDarshan</span>
+              <span className="text-4xl font-bold">KainchiDarshan</span>
             </Link>
           </div>
 
@@ -35,10 +35,10 @@ const Navbar = () => {
               Routes
             </Link>
             <Link
-              to="/traffic"
+              to="/Nearby"
               className="px-3 py-2 rounded-md hover:bg-indigo-600"
             >
-              Traffic
+              Nearby-Temple
             </Link>
             <Link
               to="/feedback"
