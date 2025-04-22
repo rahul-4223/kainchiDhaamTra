@@ -11,6 +11,7 @@ export default function RouteSelection() {
       description: "Standard route via main entrance",
       duration: "15 min",
       congestion: "high",
+      mapLink: "https://maps.app.goo.gl/hNHvt1v6MpZywcF4A",
       status: "congested",
       distance: "1.2 km",
     },
@@ -20,18 +21,11 @@ export default function RouteSelection() {
       description: "Alternative route via eastern entrance",
       duration: "22 min",
       congestion: "low",
+      mapLink: "https://www.google.com/maps/dir//Kachi+Dham/@29.9988,78.1882,15z/data=!4m9!4m8!1m0!1m5!1m1!1s0x0:0x123456789abcdef!2m2!1d78.1882!2d29.9988!3e0",
       status: "clear",
       distance: "1.8 km",
     },
-    {
-      id: 3,
-      name: "Western Path (Route C)",
-      description: "Scenic route via western side",
-      duration: "25 min",
-      congestion: "medium",
-      status: "moderate",
-      distance: "2.1 km",
-    }
+    
   ];
 
   const getStatusColor = (status) => {
@@ -229,7 +223,7 @@ export default function RouteSelection() {
                             <div className="ml-2 space-y-4 text-sm">
                               <div>
                                 <p className="font-medium">Starting Point</p>
-                                <p className="text-gray-500">Parking Area</p>
+                                <p className="text-gray-500">Bhowali</p>
                               </div>
                               <div>
                                 <p className="font-medium">Via</p>
@@ -243,10 +237,16 @@ export default function RouteSelection() {
                           </div>
                         </div>
                         <div className="mt-4">
-                          <button className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                          <a 
+                            href={route.mapLink} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                          >
                             <Navigation size={16} className="mr-2" />
                             Navigate to This Route
-                          </button>
+                            <ArrowUpRight size={16} className="ml-2" />
+                          </a>
                         </div>
                       </div>
                     )}
