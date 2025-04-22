@@ -56,7 +56,7 @@ export default function HomePage() {
             </div>
             <div className="mt-12 lg:mt-0">
               <div className="aspect-w-5 aspect-h-3 rounded-lg overflow-hidden bg-gray-100">
-                <img src="/api/placeholder/600/400" alt="Temple dashboard preview" className="object-cover" />
+                <img src="https://www.sacredyatra.com/images/temples/kainchi-dham-temple.webp" alt="Temple dashboard preview" className="object-cover" />
               </div>
             </div>
           </div>
@@ -68,7 +68,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-              How DevDarshan Works
+              How KainchiDarshan Works
             </h2>
             <p className="mt-4 text-xl text-gray-600 max-w-2xl mx-auto">
               Our platform makes temple visits more organized and convenient.
@@ -143,9 +143,19 @@ export default function HomePage() {
               </div>
             </div>
             <div className="mt-10 lg:mt-0 lg:ml-8">
-              <div className="bg-white p-4 rounded-lg shadow">
-                <img src="/api/placeholder/500/400" alt="Traffic map visualization" className="rounded" />
-              </div>
+            <div className="bg-white p-4 rounded-lg shadow">
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2093.1943632834514!2d79.51199529414005!3d29.423193752043815!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39a0a3ab1b8ec5d9%3A0xea7786fa26ed7dd0!2sKainchi%20Dham%20-%20Shri%20Neeb%20Karori%20Baba%20Ashram!5e0!3m2!1sen!2sin!4v1745321376413!5m2!1sen!2sin"
+    width="100%"
+    height="400"
+    style={{ border: 0 }}
+    allowFullScreen=""
+    loading="lazy"
+    referrerPolicy="no-referrer-when-downgrade"
+    className="rounded w-full"
+  ></iframe>
+</div>
+
             </div>
           </div>
         </div>
