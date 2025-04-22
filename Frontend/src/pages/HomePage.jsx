@@ -56,7 +56,7 @@ export default function HomePage() {
             </div>
             <div className="mt-12 lg:mt-0">
               <div className="aspect-w-5 aspect-h-3 rounded-lg overflow-hidden bg-gray-100">
-                <img src="/api/placeholder/600/400" alt="Temple dashboard preview" className="object-cover" />
+                <img src="https://www.sacredyatra.com/images/temples/kainchi-dham-temple.webp" alt="Temple dashboard preview" className="object-cover" />
               </div>
             </div>
           </div>
@@ -68,7 +68,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-              How DevDarshan Works
+              How KainchiDarshan Works
             </h2>
             <p className="mt-4 text-xl text-gray-600 max-w-2xl mx-auto">
               Our platform makes temple visits more organized and convenient.

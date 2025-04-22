@@ -12,7 +12,7 @@ const Navbar = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <span className="text-xl font-bold">DevDarshan</span>
+              <span className="text-xl font-bold">KainchiDarshan</span>
             </Link>
           </div>
 
@@ -29,9 +29,7 @@ const Navbar = () => {
             <button className="p-2 rounded-full hover:bg-indigo-600">
               <Bell size={20} />
             </button>
-            <button className="p-2 rounded-full hover:bg-indigo-600">
-              <User size={20} />
-            </button>
+            
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="md:hidden p-2 rounded-md hover:bg-indigo-600"
