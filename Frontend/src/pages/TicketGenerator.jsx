@@ -1,8 +1,12 @@
 import React from 'react'
+import { useState } from 'react';
 
 const TicketGenerator = () => {
+
   return (
-    <div>TicketGenerator</div>
+    <>
+   <h1>hello</h1>
+      </>
   )
 }
 
