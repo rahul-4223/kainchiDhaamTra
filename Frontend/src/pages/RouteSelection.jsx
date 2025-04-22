@@ -80,7 +80,7 @@ export default function RouteSelection() {
         </div>
 
         <div className="lg:grid lg:grid-cols-3 lg:gap-6 w-screen">
-          {/* Map Visualization */}
+          {/* map visulization */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-lg shadow overflow-hidden">
               <div className="p-4 border-b">
