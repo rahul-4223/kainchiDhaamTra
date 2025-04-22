@@ -4,7 +4,7 @@ import { Map, Navigation, ArrowUpRight, Clock, Users, AlertCircle } from 'lucide
 export default function RouteSelection() {
   const [selectedRoute, setSelectedRoute] = useState(null);
   
-  // Dummy data for routes
+  // Dummy data for routes 
   const routes = [
     {
       id: 1,
