@@ -35,7 +35,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-indigo-700 text-white">
+      <div className="bg-indigo-600 text-white">
         <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
           <div className="lg:grid lg:grid-cols-2 lg:gap-8 items-center">
             <div>
@@ -46,10 +46,10 @@ export default function HomePage() {
                 Plan your darshan with ease. Book time slots, check crowd levels, and find the best routes - all in one place.
               </p>
               <div className="mt-10 flex space-x-4">
-                <Link to="/slot-booking" className="bg-white text-indigo-700 px-6 py-3 rounded-md font-medium shadow-md hover:bg-gray-100">
+                <Link to="/slot-booking" className="bg-white text-indigo-700 px-6 py-3 rounded-md font-medium shadow-md hover:border-3 hover:bg-gray-100">
                   Book Entry Slot
                 </Link>
-                <Link to="/routes" className="bg-indigo-600 border border-indigo-500 px-6 py-3 rounded-md font-medium shadow-md hover:bg-indigo-500">
+                <Link to="/routes" className="bg-indigo-400 border border-indigo-500 px-6 py-3 rounded-md font-medium shadow-md hover:border-4 hover:bg-indigo-500">
                   Check Best Route
                 </Link>
               </div>
@@ -75,7 +75,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="mt-16 lg:grid lg:grid-cols-3 lg:gap-8">
+          <div className="mt-16 lg:grid lg:grid-cols-3 lg:gap-8  ">
             {features.map((feature, index) => (
               <div 
                 key={index}
@@ -83,7 +83,7 @@ export default function HomePage() {
                 onClick={() => setActiveFeatureIndex(index)}
               >
                 <div className="flex items-center">
-                  <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-100">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-md border-blue-200 bg-indigo-100 hover:border-4">
                     {feature.icon}
                   </div>
                   <h3 className="ml-4 text-xl font-medium text-gray-900">{feature.title}</h3>
