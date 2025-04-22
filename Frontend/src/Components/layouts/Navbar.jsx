@@ -35,10 +35,10 @@ const Navbar = () => {
               Routes
             </Link>
             <Link
-              to="/traffic"
+              to="/Nearby"
               className="px-3 py-2 rounded-md hover:bg-indigo-600"
             >
-              Traffic
+              Nearby-Temple
             </Link>
             <Link
               to="/feedback"

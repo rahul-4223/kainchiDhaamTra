@@ -5,7 +5,7 @@ import Footer from './Components/layouts/Footer';
 import HomePage from './pages/HomePage';
 import SlotBooking from './pages/SlotBooking';
 import RouteSelection from './pages/RouteSelection';
-import TrafficStatus from './pages/TrafficStatus';
+import Nearby from './pages/Nearby';
 import TicketGenerator from './pages/Feedback';
 import Dashboard from './pages/Dashboard';
 import NotFound from './pages/NotFound';
@@ -28,7 +28,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/slot-booking" element={<SlotBooking />} />
             <Route path="/routes" element={<RouteSelection />} />
-            <Route path="/traffic" element={<TrafficStatus />} />
+            <Route path="/Nearby" element={<Nearby/>} />
             <Route path="/feedback" element={<Feedback />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/adminLogin" element={<AdminLogin />} />
