@@ -43,7 +43,7 @@ exports.createBooking = async (req, res) => {
       await session.abortTransaction();
       session.endSession();
       return res.status(400).json({ 
-        message: Not enough capacity. Only ${availableSpots} spots available. 
+        message: `Not enough capacity. Only ${availableSpots} spots available.` 
       });
     }
     

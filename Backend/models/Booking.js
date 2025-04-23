@@ -61,7 +61,7 @@ BookingSchema.pre('save', async function(next) {
     const randomPart = Math.random().toString(36).substring(2, 8).toUpperCase();
     const timestamp = Date.now().toString().slice(-6);
     
-    this.bookingId = ${prefix}-${randomPart}-${timestamp};
+    this.bookingId =` ${prefix}-${randomPart}-${timestamp}`;
   }
   next();
 });

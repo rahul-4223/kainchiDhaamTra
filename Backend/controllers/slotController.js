@@ -217,7 +217,7 @@ exports.generateSlots = async (req, res) => {
     }
     
     return res.status(201).json({
-      message: Created ${createdSlots.length} slots successfully,
+      message: `Created ${createdSlots.length} slots successfully`,
       slots: createdSlots
     });
   } catch (error) {
