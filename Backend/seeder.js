@@ -1,119 +1,164 @@
-// seeder.js
+require('dotenv').config();
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+const connectDB = require('./config/db');
 const Temple = require('./models/Temple');
 const Slot = require('./models/Slot');
-
-// Load env vars
-dotenv.config();
-
-// Connect to DB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+const moment = require('moment');
 
 // Sample data
 const temples = [
   {
-    name: 'Sri Venkateshwara Temple',
-    address: '123 Temple St, City, State 12345',
-    description: 'Famous temple dedicated to Lord Venkateshwara.',
-    maxVisitorsPerSlot: 50,
-    image: 'venkateshwara-temple.jpg'
+    name: 'Golden Temple',
+    location: {
+      address: '123 Divine Street',
+      city: 'Amritsar',
+      state: 'Punjab',
+      pincode: '143001',
+      coordinates: {
+        lat: 31.6200,
+        lng: 74.8765
+      }
+    },
+    description: 'A beautiful historic temple known for its golden architecture.',
+    images: ['golden-temple-1.jpg', 'golden-temple-2.jpg'],
+    defaultOpenTime: '04:00 AM',
+    defaultCloseTime: '10:00 PM',
+    defaultSlotDuration: 60,
+    defaultSlotCapacity: 20,
+    specialInstructions: 'Please cover your head before entering. No photography allowed inside the main shrine.',
+    contactInfo: {
+      phone: '+91-1234567890',
+      email: 'info@goldentemple.org',
+      website: 'www.goldentemple.org'
+    }
   },
   {
-    name: 'Shiva Temple',
-    address: '456 Divine Rd, City, State 12345',
-    description: 'Ancient temple dedicated to Lord Shiva.',
-    maxVisitorsPerSlot: 40,
-    image: 'shiva-temple.jpg'
-  },
-  {
-    name: 'Lakshmi Narasimha Temple',
-    address: '789 Sacred Ave, City, State 12345',
-    description: 'Beautiful temple dedicated to Goddess Lakshmi and Lord Narasimha.',
-    maxVisitorsPerSlot: 60,
-    image: 'lakshmi-narasimha-temple.jpg'
+    name: 'Lotus Temple',
+    location: {
+      address: '456 Lotus Lane',
+      city: 'New Delhi',
+      state: 'Delhi',
+      pincode: '110019',
+      coordinates: {
+        lat: 28.5535,
+        lng: 77.2588
+      }
+    },
+    description: 'A Bahá í House of Worship notable for its flowerlike shape.',
+    images: ['lotus-temple-1.jpg', 'lotus-temple-2.jpg'],
+    defaultOpenTime: '09:00 AM',
+    defaultCloseTime: '05:30 PM',
+    defaultSlotDuration: 60,
+    defaultSlotCapacity: 30,
+    specialInstructions: 'Please maintain silence inside the temple. Photography allowed outside only.',
+    contactInfo: {
+      phone: '+91-9876543210',
+      email: 'visit@lotustemple.in',
+      website: 'www.lotustemple.in'
+    }
   }
 ];
 
-// Function to generate time slots for a temple
-const generateTempleSlots = async (templeId, date) => {
-  const timeSlots = [
-    { startTime: '09:00', endTime: '10:00', capacity: 50 },
-    { startTime: '10:00', endTime: '11:00', capacity: 50 },
-    { startTime: '11:00', endTime: '12:00', capacity: 50 },
-    { startTime: '12:00', endTime: '13:00', capacity: 50 },
-    { startTime: '13:00', endTime: '14:00', capacity: 50 },
-    { startTime: '14:00', endTime: '15:00', capacity: 50 },
-    { startTime: '15:00', endTime: '16:00', capacity: 50 },
-    { startTime: '16:00', endTime: '17:00', capacity: 50 }
-  ];
-
+// Generate slots for next 7 days
+const generateSlots = async (temple) => {
   const slots = [];
+  const today = moment().startOf('day');
   
-  for (let i = 0; i < timeSlots.length; i++) {
-    const slot = new Slot({
-      temple: templeId,
-      date: date,
-      startTime: timeSlots[i].startTime,
-      endTime: timeSlots[i].endTime,
-      totalCapacity: timeSlots[i].capacity,
-      availableSpots: timeSlots[i].capacity - Math.floor(Math.random() * 30) // Random number of booked spots
-    });
+  // Loop through next 7 days
+  for (let day = 0; day < 7; day++) {
+    const currentDate = moment(today).add(day, 'days');
+    const openTime = moment(temple.defaultOpenTime, 'hh:mm A');
+    const closeTime = moment(temple.defaultCloseTime, 'hh:mm A');
     
-    await slot.save();
-    slots.push(slot);
+    // Start time is the opening time
+    let currentTime = openTime.clone();
+    
+    // Create slots until closing time
+    while (currentTime.add(temple.defaultSlotDuration, 'minutes').isSameOrBefore(closeTime)) {
+      const slotStartTime = currentTime.clone().subtract(temple.defaultSlotDuration, 'minutes').format('hh:mm A');
+      const slotEndTime = currentTime.format('hh:mm A');
+      
+      // Calculate random booking count for demo
+      const randomBookingCount = Math.floor(Math.random() * (temple.defaultSlotCapacity / 2));
+      
+      // Calculate status based on booking count
+      let status = 'available';
+      const percentBooked = (randomBookingCount / temple.defaultSlotCapacity) * 100;
+      
+      if (randomBookingCount >= temple.defaultSlotCapacity) {
+        status = 'full';
+      } else if (percentBooked >= 75) {
+        status = 'almost-full';
+      } else if (percentBooked >= 25) {
+        status = 'filling';
+      }
+      
+      slots.push({
+        temple: temple._id,
+        date: currentDate.toDate(),
+        startTime: slotStartTime,
+        endTime: slotEndTime,
+        totalCapacity: temple.defaultSlotCapacity,
+        bookedCount: randomBookingCount,
+        status: status
+      });
+    }
   }
   
   return slots;
 };
 
-// Import data into DB
+// Import data to database
 const importData = async () => {
   try {
+    await connectDB();
+    
     // Clear existing data
     await Temple.deleteMany();
     await Slot.deleteMany();
     
+    console.log('Data cleared...');
+    
     // Insert temples
     const createdTemples = await Temple.insertMany(temples);
-    console.log('Temples imported!');
+    console.log(`${createdTemples.length} temples inserted`);
     
-    // Generate slots for today and next 7 days
+    // Generate and insert slots
+    let allSlots = [];
+    
     for (const temple of createdTemples) {
-      for (let i = 0; i < 7; i++) {
-        const date = new Date();
-        date.setDate(date.getDate() + i);
-        await generateTempleSlots(temple._id, date);
-      }
+      const templeSlots = await generateSlots(temple);
+      allSlots = [...allSlots, ...templeSlots];
     }
     
-    console.log('Slots generated!');
-    console.log('Data Import Complete!');
+    await Slot.insertMany(allSlots);
+    console.log(`${allSlots.length} slots inserted`);
+    
+    console.log('Data import completed!');
     process.exit();
   } catch (error) {
-    console.error(`Error: ${error.message}`);
+    console.error(`Error importing data: ${error.message}`);
     process.exit(1);
   }
 };
 
-// Delete data from DB
+// Delete all data from database
 const destroyData = async () => {
   try {
+    await connectDB();
+    
     await Temple.deleteMany();
     await Slot.deleteMany();
     
-    console.log('Data Destroyed!');
+    console.log('All data destroyed!');
     process.exit();
   } catch (error) {
-    console.error(`Error: ${error.message}`);
+    console.error(`Error destroying data: ${error.message}`);
     process.exit(1);
   }
 };
 
-// Check if the -d flag was provided
+// Determine which function to run based on command argument
 if (process.argv[2] === '-d') {
   destroyData();
 } else {

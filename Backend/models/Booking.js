@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const bookingSchema = mongoose.Schema({
+const BookingSchema = new mongoose.Schema({
   slot: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Slot',
@@ -11,10 +11,9 @@ const bookingSchema = mongoose.Schema({
     ref: 'Temple',
     required: true
   },
-  bookingId: {
-    type: String,
-    required: true,
-    unique: true
+  visitDate: {
+    type: Date,
+    required: true
   },
   visitorCount: {
     type: Number,
@@ -23,35 +22,48 @@ const bookingSchema = mongoose.Schema({
   },
   contactName: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   phoneNumber: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   email: {
-    type: String
+    type: String,
+    trim: true,
+    lowercase: true,
+    match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address']
+  },
+  bookingId: {
+    type: String,
+    unique: true
   },
   status: {
     type: String,
-    enum: ['confirmed', 'cancelled', 'completed'],
+    enum: ['pending', 'confirmed', 'cancelled'],
     default: 'confirmed'
+  },
+  checkInTime: {
+    type: Date
+  },
+  notes: {
+    type: String
   }
-}, {
-  timestamps: true
-});
+}, { timestamps: true });
 
-// Generate unique booking ID
-bookingSchema.pre('save', async function(next) {
-  if (!this.isNew) {
-    return next();
+// Generate a unique booking ID before saving
+BookingSchema.pre('save', async function(next) {
+  if (!this.bookingId) {
+    // Generate a random alphanumeric booking ID
+    const prefix = 'TBK';
+    const randomPart = Math.random().toString(36).substring(2, 8).toUpperCase();
+    const timestamp = Date.now().toString().slice(-6);
+    
+    this.bookingId = ${prefix}-${randomPart}-${timestamp};
   }
-  
-  const prefix = 'DVDR-';
-  const randomPart = Math.floor(100000 + Math.random() * 900000).toString();
-  this.bookingId = prefix + randomPart;
-  
   next();
 });
 
-module.exports = mongoose.model('Booking', bookingSchema);
+module.exports = mongoose.model('Booking', BookingSchema);

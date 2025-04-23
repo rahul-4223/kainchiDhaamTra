@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const slotSchema = mongoose.Schema({
+const SlotSchema = new mongoose.Schema({
   temple: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Temple',
@@ -20,30 +20,38 @@ const slotSchema = mongoose.Schema({
   },
   totalCapacity: {
     type: Number,
-    required: true
+    required: true,
+    default: 20
   },
-  availableSpots: {
+  bookedCount: {
     type: Number,
-    required: true
+    default: 0
   },
   status: {
     type: String,
     enum: ['available', 'filling', 'almost-full', 'full'],
     default: 'available'
+  },
+  isActive: {
+    type: Boolean,
+    default: true
   }
-}, {
-  timestamps: true
+}, { timestamps: true });
+
+// Virtual field for available spots
+SlotSchema.virtual('availableSpots').get(function() {
+  return this.totalCapacity - this.bookedCount;
 });
 
-// Pre-save hook to calculate status
-slotSchema.pre('save', function(next) {
-  const availabilityPercentage = (this.availableSpots / this.totalCapacity) * 100;
+// Pre-save middleware to update status based on booking count
+SlotSchema.pre('save', function(next) {
+  const percentBooked = (this.bookedCount / this.totalCapacity) * 100;
   
-  if (this.availableSpots === 0) {
+  if (this.bookedCount >= this.totalCapacity) {
     this.status = 'full';
-  } else if (availabilityPercentage <= 10) {
+  } else if (percentBooked >= 75) {
     this.status = 'almost-full';
-  } else if (availabilityPercentage <= 30) {
+  } else if (percentBooked >= 25) {
     this.status = 'filling';
   } else {
     this.status = 'available';
@@ -52,4 +60,11 @@ slotSchema.pre('save', function(next) {
   next();
 });
 
-module.exports = mongoose.model('Slot', slotSchema);
+// Ensure virtuals are included in JSON
+SlotSchema.set('toJSON', { virtuals: true });
+SlotSchema.set('toObject', { virtuals: true });
+
+// Compound index for finding slots by temple and date
+SlotSchema.index({ temple: 1, date: 1 });
+
+module.exports = mongoose.model('Slot', SlotSchema);

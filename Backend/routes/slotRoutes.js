@@ -1,19 +1,21 @@
 const express = require('express');
-const { 
-  getSlots, 
-  getSlotById, 
-  createSlot, 
-  generateSlots, 
-  updateSlot 
-} = require('../controllers/slotController');
-
 const router = express.Router();
+const slotController = require('../controllers/slotController');
+const { protect } = require('../middleware/auth');
 
-// Removed or fixed this line:
-router.get('/all', getSlots); 
+// Get slots by temple ID and date
+router.get('/temple/:templeId/date/:date', slotController.getSlotsByDate);
 
-router.route('/').get(getSlots).post(createSlot);
-router.route('/generate').post(generateSlots);
-router.route('/:id').get(getSlotById).put(updateSlot);
+// Create a new slot (protected)
+router.post('/', protect, slotController.createSlot);
+
+// Update a slot (protected)
+router.put('/:slotId', protect, slotController.updateSlot);
+
+// Delete a slot (protected)
+router.delete('/:slotId', protect, slotController.deleteSlot);
+
+// Generate slots for a date range (protected)
+router.post('/generate', protect, slotController.generateSlots);
 
 module.exports = router;
